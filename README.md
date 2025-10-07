@@ -1,21 +1,30 @@
-## o que falta:
-- testes
+# 🌰 Simulador Hub Caju Embrapa
 
-Endpoints da Api: 
-[http://localhost:3000/api/simulador/substituicao] // tabela substituicaodecopasimulacao
-[http://localhost:3000/api/simulador/implantacao]  // tabela implantacaocajueiroanaosimulacao
-
-## Arquitetura do projeto
-### SIMULADOR HUB CAJU EMBRAPA
+O **Simulador Hub Caju Embrapa** é uma aplicação interativa desenvolvida para processar e visualizar dados de simulações agrícolas baseadas em planilhas da Embrapa.  
+O sistema integra um **backend em Node.js** para leitura e tratamento de arquivos `.xlsx`, com um **frontend em React + Vite + TailwindCSS**, oferecendo uma interface moderna e responsiva.
 
 ---
 
 ## 🌐 Tecnologias Utilizadas
 
-- **Frontend**: React + Vite + TailwindCSS  
-- **Backend**: Node.js + Express  
-- **Estilo**: CSS Modularizado com suporte ao Tailwind  
-- **Dados**: Planilhas `.xlsx` importadas e processadas no backend  
+### 🎨 Frontend
+- **React 19** — Biblioteca para criação de interfaces dinâmicas  
+- **Vite 6** — Ferramenta de build rápida e moderna  
+- **TailwindCSS 4** — Framework utilitário para estilização  
+- **React Router DOM 7** — Gerenciamento de rotas no SPA  
+- **Chart.js + React ChartJS 2** — Gráficos interativos e responsivos  
+- **FontAwesome** — Ícones SVG personalizáveis  
+
+### ⚙️ Backend
+- **Node.js + Express 5** — Servidor web e roteamento de APIs  
+- **XLSX** — Leitura e processamento de planilhas Excel  
+- **CORS e Dotenv** — Configuração de ambiente e segurança  
+
+---
+
+## 🏗️ Arquitetura do Projeto
+
+A aplicação é dividida em duas partes principais: **frontend** e **backend**, com separação clara entre camadas de apresentação, lógica e dados.
 
 ---
 
@@ -61,17 +70,92 @@ SIMULADOR
 │   ├── eslint.config.js
 │   └── .gitignore
 ``` 
+
+---
+
 ## 🧱 Estrutura Modular por Responsabilidade
 
 ### 🎨 Frontend
+Organizado por **domínio visual e funcional**, aproximando-se das abordagens *Atomic Design* e *Feature-based Architecture*.
 
-- Organizado por **domínio visual**, com pastas como `components`, `pages`, `services` e `styles`. Isso se aproxima bastante das abordagens *Atomic Design* ou *Feature-based Architecture*.
-- Há uma separação clara entre:
-  - **Camadas de apresentação** → `pages/` e `components/`
-  - **Lógica de negócio** → `services/` e `util/`
-- Essa organização facilita a escalabilidade, a manutenibilidade do código e a colaboração entre desenvolvedores.
+- **Camada de Apresentação:** `pages/` e `components/`  
+- **Lógica de Negócio:** `services/util/`  
+- **Estilo e Layout:** `styles/`
+
+Essa estrutura facilita escalabilidade, manutenção e colaboração entre desenvolvedores.
 
 ### 🛠️ Backend
+Segue o padrão **MVC simplificado**, com foco na leitura e processamento de dados das planilhas Excel e exposição via API RESTful.
 
-Padrão MVC
+---
 
+## 🚀 Guia de Instalação
+
+### 🧩 1. Pré-requisitos
+
+Certifique-se de ter instalado:
+
+```bash
+[Node.js](https://nodejs.org/) (versão **18** ou superior)
+[npm](https://www.npmjs.com/) (instalado junto com o Node)
+[Git](https://git-scm.com/) *(opcional)*
+``` 
+
+### 📦 2. Clonar o Repositório
+
+```bash
+git clone https://github.com/usuario/simulador-hub-caju.git
+cd simulador-hub-caju
+``` 
+
+### ⚙️ 3. Instalar Dependências
+🔸 Backend
+```bash
+cd backend
+npm install
+```
+
+Crie um arquivo .env (caso não exista):
+
+```bash
+PORT=3000
+``` 
+
+🔹 Frontend
+
+Em outro terminal:
+```bash
+cd frontend
+npm install
+``` 
+
+### ▶️ 4. Executar o Projeto
+🖥️ Backend
+
+Na pasta backend, execute:
+```bash
+npm start
+``` 
+
+O servidor será iniciado em:
+```bash
+http://localhost:3000
+``` 
+
+Endpoints disponíveis:
+```bash
+GET http://localhost:3000/api/simulador/substituicao → dados da tabela substituicaodecopasimulacao
+GET http://localhost:3000/api/simulador/implantacao → dados da tabela implantacaocajueiroanaosimulacao
+``` 
+
+💻 Frontend
+
+Na pasta frontend, execute:
+```bash
+npm run dev
+``` 
+
+A aplicação abrirá automaticamente em:
+```bash
+http://localhost:5173
+``` 
