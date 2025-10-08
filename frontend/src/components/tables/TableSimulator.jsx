@@ -1,10 +1,11 @@
 import React from "react";
+import "./TableSimulator.css";
 
 const FIRST_COLUMN_TITLES = {
   preparoSolo: "PREPARO DO SOLO",
   insumos: "INSUMOS",
   preparoArea: "PREPARO DA ÁREA",
-  servicos: "SERVIÇOS",
+  servicos: "SERVICOS",
 };
 
 const TableSimulator = ({
@@ -24,8 +25,8 @@ const TableSimulator = ({
   }, 0);
 
   return (
-    <div className="table-responsive-container">
-      <div className="outer-container" style={{ margin: "0 20px" }}>
+    <section className="table-responsive-container">
+      <div className="outer-container">
         <div className="table-scroll-wrapper">
           <table className="simulator-table">
             <thead>
@@ -43,7 +44,7 @@ const TableSimulator = ({
                       : col}
                   </th>
                 ))}
-                <th>TOTAL</th>
+                <th scope="col">TOTAL</th>
               </tr>
             </thead>
             <tbody>
@@ -67,6 +68,7 @@ const TableSimulator = ({
                             width: col === "qty" ? "70px" : "100px",
                           }}
                           step={col === "unitValue" ? "0.01" : "1"}
+                          aria-label={`Editar ${col} da linha ${rowIndex + 1}`}
                         />
                       ) : (
                         <div
@@ -137,7 +139,7 @@ const TableSimulator = ({
           </table>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

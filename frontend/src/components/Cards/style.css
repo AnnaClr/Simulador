@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+.summary-cards {
+  @apply grid gap-[20px] p-[40px] bg-[var(--white)];
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.summary-card {
+  @apply bg-[var(--white)] rounded-[8px] p-[35px] flex items-center gap-[15px] w-[450px]
+         shadow-[var(--shadow)] transition-transform duration-[300ms] ease-in-out;
+}
+
+.summary-card:hover {
+  @apply scale-[1.02];
+}
+
+.summary-card.highlight {
+  @apply bg-[linear-gradient(135deg,var(--primary-light),var(--primary))] text-white;
+}
+
+.summary-card.highlight .summary-label,
+.summary-card.highlight .summary-value {
+  @apply text-white;
+}
+
+.summary-icon {
+  @apply w-[48px] h-[48px] rounded-full flex items-center justify-center
+         text-[1.2rem] bg-[var(--primary-extra-light)] text-[var(--primary)];
+}
+
+.summary-card.highlight .summary-icon {
+  @apply bg-[rgba(255,255,255,0.2)] text-white;
+}
+
+.summary-content {
+  @apply flex flex-col;
+}
+
+.summary-label {
+  @apply text-[0.85rem] font-medium text-[var(--text-light)];
+}
+
+.summary-value {
+  @apply text-[1.1rem] font-semibold text-[var(--text)];
+}
+
+.summary-card.highlight .summary-value {
+  @apply text-[1.3rem];
+}
+
+@media (max-width: 768px) {
+  .summary-cards {
+    @apply grid-cols-1;
+  }
+
+  .summary-card {
+    @apply w-full;
+  }
+}

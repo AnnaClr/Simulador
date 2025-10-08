@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+.dashboard-container {
+  @apply max-w-full mx-auto bg-[var(--white)] overflow-hidden;
+}
+
+.dashboard-header {
+  @apply flex justify-between items-center px-[25px] py-[20px]
+         bg-[linear-gradient(135deg,var(--primary),var(--primary-dark))] text-white;
+}
+
+.dashboard-header h1 {
+  @apply text-[1.5rem] font-semibold flex items-center gap-[10px];
+}
+
+.tables-section,
+.chart-section {
+  @apply p-[20px];
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    @apply flex-col items-start gap-[15px];
+  }
+}

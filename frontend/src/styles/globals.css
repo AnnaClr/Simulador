@@ -1,61 +1,21 @@
 @import "tailwindcss";
 
-* {
-  @apply 
-  m-0 
-  p-0 
-  box-border;
+:root {
+    --primary: #E67E22;
+    --primary-dark: #D35400;
+    --primary-light: #F39C12;
+    --primary-extra-light: #FDEDDC;
+    --text: #333333;
+    --text-light: #666666;
+    --border: #E0E0E0;
+    --bg: #F9F9F9;
+    --white: #FFFFFF;
+    --success: #27AE60;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-body {
-  @apply 
-  
-  leading-[1.6] 
-  text-[#333] 
-  bg-[#ffffff] 
-  m-0;
+* { @apply m-0 p-0 box-border; }
 
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+body { @apply text-[var(--text)] bg-[var(--bg)] leading-[1.6]; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
 
-a {
-  @apply 
-  
-  no-underline 
-  text-inherit;
-}
-
-.home-container {
-  @apply 
-  
-  max-w-[800px] 
-  mx-auto 
-  text-center 
-  py-[40px] 
-  px-[20px];
-}
-
-.simulation-links {
-  @apply 
-  
-  flex gap-[20px] 
-  justify-center 
-  mt-[40px];
-}
-
-.simulation-link {
-  @apply 
-  
-  px-[30px] 
-  py-[15px] 
-  bg-[#E67E22] 
-  text-white 
-  rounded-[6px] 
-  font-bold transition-all duration-300 ease-in-out;
-}
-
-.simulation-link:hover {
-  @apply 
-  
-  bg-[#D35400];
-}
+.hidden { @apply hidden; }

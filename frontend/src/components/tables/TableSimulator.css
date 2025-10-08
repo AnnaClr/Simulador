@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+.table-responsive-container {
+  @apply w-full max-w-[1440px] mx-auto mb-6;
+}
+
+.outer-container {
+  margin: 0 20px;
+}
+
+.table-scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.simulator-table {
+  @apply w-full border-collapse min-w-[800px];
+}
+
+.simulator-table th,
+.simulator-table td {
+  @apply p-[15px] text-left border-b-[1px] border-[var(--border)];
+}
+
+.simulator-table th {
+  @apply bg-[var(--primary)] text-[var(--white)] font-semibold sticky top-0;
+}
+
+.simulator-table tr:nth-child(even) {
+  @apply bg-[var(--bg)];
+}
+
+.item-col {
+  @apply w-[40%];
+}
+
+.unit-col,
+.qty-col {
+  @apply w-[20%];
+}
+
+.value-col,
+.total-col {
+  @apply w-[20%] text-right;
+}
+
+.total-col {
+  @apply font-semibold text-[var(--primary-dark)];
+}
+
+.total-row {
+  background-color: var(--primary);
+  color: white;
+}
+
+.total-row td {
+  padding: 14px 16px;
+  font-size: 1.1rem;
+  color: white;
+}
+
+.mobile-hover {
+  background-color: #f0f7ff !important;
+  border: 1px solid #4a90e2 !important;
+}
+
+@media (min-width: 1600px) {
+  .table-responsive-container {
+    max-width: 1400px;
+  }
+
+  .simulator-table th,
+  .simulator-table td {
+    padding: 18px 28px;
+  }
+}

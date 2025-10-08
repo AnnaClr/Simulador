@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding-bottom: 40px;
+  background: white;
+}
+
+.view-mode-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.print-button,
+.toggle-button,
+.view-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.print-button {
+  width: 160px;
+  padding: 10px 16px;
+  font-size: 14px;
+  background: #F39C12;
+  color: white;
+}
+
+.print-button:hover {
+  background: #E67E22;
+}
+
+.toggle-button {
+  width: 160px;
+  padding: 10px 16px;
+  font-size: 14px;
+  background: #FDEDDC;
+  color: #D35400;
+}
+
+.toggle-button.active,
+.toggle-button:hover {
+  background: #E67E22;
+  color: white;
+}
+
+.view-button {
+  font-size: 13px;
+  padding: 8px 12px;
+  background: #FDEDDC;
+  color: #666666;
+}
+
+.view-button.active {
+  background: white;
+  color: #D35400;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 640px) {
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .view-mode-buttons {
+    display: flex;
+    align-items: center;
+  }
+}

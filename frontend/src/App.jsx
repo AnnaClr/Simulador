@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/home/index'
-import Simulacao1 from './pages/first-simulation/index'
-import Simulacao2 from './pages/second-simulation/index'
+import Simulacao1 from './pages/implatacao/index'
+import Simulacao2 from './pages/substituicao/index'
 import './styles/globals.css'
 
 function App() {

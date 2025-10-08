@@ -1,175 +1,121 @@
 @import "tailwindcss";
 
 :root {
-  --orange-primary: #e4791b;
-  --orange-dark: #E67329;
-  --orange-light: #FF9966;
-  --orange-lighter: #FFB380;
-  --cream: #FFF5E6;
+  --orange-light: #ffd8b1;
+  --orange-primary: #ff6810;
+  --orange-dark: #e35700;
+  --cream: #fff7f2;
+  --primary-dark: #2c2c2c;
+  --text-light: #666666;
 }
 
 .home-container {
-  @apply 
-  
-  flex 
-  justify-center 
-  items-center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem;
+  text-align: center;
+}
+
+.home-header {
+  margin-bottom: 3rem;
+}
+
+.home-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+}
+
+.home-subtitle {
+  font-size: 1.125rem;
+  color: var(--text-light);
+  line-height: 1.6;
 }
 
 .cards-container {
-  @apply 
-  
-  flex 
-  justify-center 
-  items-center 
-  gap-[2rem] 
-  flex-wrap 
-  max-w-[1200px] 
-  m-[0_auto];
+  @apply flex justify-center items-center gap-[2rem] flex-wrap max-w-[1200px] m-[0_auto];
 }
 
 .card {
-  @apply 
-  
-  bg-white 
-  rounded-[12px] 
-  overflow-hidden 
-  shadow-[0_10px_20px_rgba(0,0,0,0.1)] 
-  w-[350px] 
-  transition-transform duration-[300ms] ease-in-out 
-  flex 
-  flex-col;
+  @apply bg-white rounded-[12px] overflow-hidden shadow-[0_10px_20px_rgba(0,0,0,0.1)] w-[350px]
+         transition-transform duration-[300ms] ease-in-out flex flex-col;
 }
 
 .card:hover {
-  @apply 
-  
-  translate-y-[-10px];
+  @apply translate-y-[-10px];
 }
 
 .card-orange {
-  @apply 
-  
-  border-t-[5px] 
-  border-t-[var(--orange-primary)];
+  border-top: 5px solid var(--orange-primary);
 }
 
 .card-orange-dark {
-  @apply 
-  
-  border-t-[5px] 
-  border-t-[var(--orange-dark)];
+  border-top: 5px solid var(--orange-dark);
 }
 
 .card-header {
-  @apply 
-  
-  p-[1.5rem] 
-  text-center 
-  bg-[var(--cream)];
+  @apply p-[1.5rem] text-center;
+  background-color: var(--cream);
 }
 
 .card-icon {
-  @apply 
-  
-  text-[2.5rem] 
-  text-[var(--orange-dark)] 
-  mb-[1rem];
+  font-size: 2.5rem;
+  color: var(--orange-dark);
+  margin-bottom: 1rem;
 }
 
 .card h2 {
-  @apply 
-  
-  text-[#333] 
-  m-0 
-  text-[1.5rem];
+  color: #333;
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 .card-body {
-  @apply 
-  
-  p-[1.5rem] 
-  flex-grow;
+  @apply p-[1.5rem] flex-grow;
 }
 
 .card-body p {
-  @apply 
-  
-  text-[#555] 
-  mb-[1.5rem] 
-  leading-[1.5];
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
 }
 
 .card-features {
-  @apply 
-  
-  list-none 
-  p-0 
-  m-0;
+  @apply list-none p-0 m-0;
 }
 
 .card-features li {
-  @apply 
-  
-  py-[0.5rem] 
-  text-[#444] 
-  flex 
-  items-center 
-  gap-[0.5rem];
+  @apply py-[0.5rem] text-[#444] flex items-center gap-[0.5rem];
 }
 
 .card-features svg {
-  @apply 
-  
-  text-[var(--orange-primary)];
+  color: var(--orange-primary);
 }
 
 .card-footer {
-  @apply 
-  
-  p-[1.5rem] 
-  text-center 
-  bg-[rgba(255,159,102,0.1)];
+  @apply p-[1.5rem] text-center;
+  background-color: rgba(255, 159, 102, 0.1);
 }
 
-
 .card-button {
-  @apply 
-  
-  inline-block 
-  bg-[var(--orange-primary)] 
-  text-white 
-  px-[2rem] 
-  py-[0.8rem] 
-  rounded-[50px] 
-  no-underline 
-  font-semibold 
-  transition-all 
-  duration-[300ms] 
-  ease-in-out 
-  border-[2px] 
-  border-[var(--orange-primary)];
+  @apply inline-block text-white px-[2rem] py-[0.8rem] rounded-[50px] no-underline font-semibold
+         transition-all duration-[300ms] ease-in-out border-[2px];
+  background-color: var(--orange-primary);
+  border-color: var(--orange-primary);
 }
 
 .card-button:hover {
-  @apply
-
-  bg-white
-  text-[var(--orange-primary)]
+  background-color: white;
+  color: var(--orange-primary);
 }
 
 @media (max-width: 768px) {
   .cards-container {
-    @apply 
-    
-    flex flex-col 
-    items-center;
+    @apply flex flex-col items-center;
   }
 
   .card {
-    @apply
-
-    w-full 
-    max-w-[400px];
+    @apply w-full max-w-[400px];
   }
 }
