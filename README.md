@@ -98,14 +98,13 @@ Certifique-se de ter instalado:
 ```bash
 [Node.js](https://nodejs.org/) (versão **18** ou superior)
 [npm](https://www.npmjs.com/) (instalado junto com o Node)
-[Git](https://git-scm.com/) *(opcional)*
 ``` 
 
 ### 📦 2. Clonar o Repositório
 
 ```bash
-git clone https://github.com/usuario/simulador-hub-caju.git
-cd simulador-hub-caju
+git clone https://github.com/AnnaClr/Simulador
+cd Simulador
 ``` 
 
 ### ⚙️ 3. Instalar Dependências
