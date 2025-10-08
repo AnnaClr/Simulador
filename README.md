@@ -114,12 +114,6 @@ cd backend
 npm install
 ```
 
-Crie um arquivo .env (caso não exista):
-
-```bash
-PORT=3000
-``` 
-
 🔹 Frontend
 
 Em outro terminal:
