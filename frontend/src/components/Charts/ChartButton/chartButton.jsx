@@ -7,7 +7,7 @@ import {
     faListUl,
     faPrint,
 } from "@fortawesome/free-solid-svg-icons";
-import "./ChartButton.css";
+import "./chartButton.css";
 
 const handlePrint = () => {
     window.print();
