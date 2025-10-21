@@ -147,6 +147,11 @@ Na pasta frontend, execute:
 ```bash
 npm run dev
 ``` 
+ou para Linux:
+
+```bash
+node server.js
+```
 
 A aplicação abrirá automaticamente em:
 ```bash
