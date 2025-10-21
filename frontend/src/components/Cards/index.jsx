@@ -27,6 +27,12 @@ export default function SummaryCards({
               gap: "3px",
               fontSize: "17px",
               fontWeight: "600",
+              borderRadius: "4px",
+              padding: "4px",
+              border:
+                  editing?.type === "hectares" && isMobile
+                    ? "2px solid #959595"
+                    : "none",
             }}
           >
             Hectares:
@@ -34,26 +40,17 @@ export default function SummaryCards({
               onClick={() => setEditing({ type: "hectares" })}
               style={{
                 padding: "1px 12px",
-                borderRadius: "4px",
                 cursor: "pointer",
                 transition: "background-color 0.2s ease",
-                backgroundColor:
-                  editing?.type === "hectares" || isMobile
-                    ? "#f0ffff"
-                    : "transparent",
-                border:
-                  editing?.type === "hectares" || isMobile
-                    ? "1px solid #4a90e2"
-                    : "none",
               }}
               onMouseEnter={(e) => {
                 if (!isMobile)
-                  e.currentTarget.style.backgroundColor = "#f0f7ff";
+                  e.currentTarget.style.backgroundColor = "#ebebeb";
               }}
               onMouseLeave={(e) => {
                 if (!isMobile) {
                   e.currentTarget.style.backgroundColor =
-                    editing?.type === "hectares" ? "#f0f7ff" : "transparent";
+                    editing?.type === "hectares" ? "#ebebeb" : "transparent";
                 }
               }}
             >

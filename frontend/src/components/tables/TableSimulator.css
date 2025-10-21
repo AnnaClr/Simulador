@@ -61,8 +61,8 @@
 }
 
 .mobile-hover {
-  background-color: #f0f7ff !important;
-  border: 1px solid #4a90e2 !important;
+  background: none !important;
+  border: 1px solid #959595 !important;
 }
 
 @media (min-width: 1600px) {

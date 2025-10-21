@@ -5,7 +5,7 @@ const FIRST_COLUMN_TITLES = {
   preparoSolo: "PREPARO DO SOLO",
   insumos: "INSUMOS",
   preparoArea: "PREPARO DA ÁREA",
-  servicos: "SERVICOS",
+  servicos: "SERVIÇOS",
 };
 
 const TableSimulator = ({
@@ -20,9 +20,10 @@ const TableSimulator = ({
 }) => {
   const columns = columnsConfig[tableType] || [];
 
-  const totalGeral = tableData.reduce((total, row) => {
-    return total + row.qty * row.unitValue * hectares;
-  }, 0);
+  const totalGeral = tableData.reduce(
+    (total, row) => total + row.qty * row.unitValue * hectares,
+    0
+  );
 
   return (
     <section className="table-responsive-container">
@@ -56,28 +57,34 @@ const TableSimulator = ({
                       editing?.index === rowIndex &&
                       editing?.field === col ? (
                         <input
-                          type={col === "unitValue" ? "number" : "text"}
+                          type="number"
+                          min="0"
                           value={row[col]}
                           onChange={handleEditChange}
                           onBlur={handleEditBlur}
                           autoFocus
                           style={{
-                            border: "1px solid #4a90e2",
+                            border: "1px solid #4a91e20",
                             borderRadius: "4px",
                             padding: "4px 8px",
-                            width: col === "qty" ? "70px" : "100px",
+                            width:
+                              col === "qty" || col === "unitValue"
+                                ? "90px"
+                                : "100px",
                           }}
-                          step={col === "unitValue" ? "0.01" : "1"}
+                          step="1"
                           aria-label={`Editar ${col} da linha ${rowIndex + 1}`}
                         />
                       ) : (
                         <div
-                          onDoubleClick={() =>
-                            col === "qty" &&
-                            handleEditStart(tableType, rowIndex, col)
-                          }
+                          onDoubleClick={() => {
+                            if (col === "qty" || col === "unitValue") {
+                              handleEditStart(tableType, rowIndex, col);
+                            }
+                          }}
                           className={
-                            col === "qty" && window.innerWidth <= 768
+                            (col === "qty" || col === "unitValue") &&
+                            window.innerWidth <= 768
                               ? "mobile-hover"
                               : ""
                           }
@@ -85,19 +92,23 @@ const TableSimulator = ({
                             padding: "4px 8px",
                             borderRadius: "4px",
                             transition: "background-color 0.2s ease",
-                            cursor: col === "qty" ? "pointer" : "default",
+                            cursor:
+                              col === "qty" || col === "unitValue"
+                                ? "pointer"
+                                : "default",
                             backgroundColor:
                               editing?.type === tableType &&
                               editing?.index === rowIndex &&
                               editing?.field === col
-                                ? "#f0f7ff"
-                                : window.innerWidth <= 768 && col === "qty"
-                                ? "#f0f7ff"
+                                ? "#ebebeb"
+                                : window.innerWidth <= 768 &&
+                                  (col === "qty" || col === "unitValue")
+                                ? "#ebebeb"
                                 : "transparent",
                           }}
                           onMouseEnter={(e) => {
-                            if (col === "qty") {
-                              e.currentTarget.style.backgroundColor = "#f0f7ff";
+                            if (col === "qty" || col === "unitValue") {
+                              e.currentTarget.style.backgroundColor = "#ebebeb";
                             }
                           }}
                           onMouseLeave={(e) => {
@@ -107,8 +118,9 @@ const TableSimulator = ({
                               editing?.field !== col
                             ) {
                               e.currentTarget.style.backgroundColor =
-                                window.innerWidth <= 768 && col === "qty"
-                                  ? "#f0f7ff"
+                                window.innerWidth <= 768 &&
+                                (col === "qty" || col === "unitValue")
+                                  ? "#ebebeb"
                                   : "transparent";
                             }
                           }}

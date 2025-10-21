@@ -22,6 +22,15 @@ const SimulationWrapper = ({
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        const saved = localStorage.getItem("hectares");
+        if (saved) setHectares(Number(saved));
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("hectares", hectares);
+    }, [hectares]);
+
+    useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             setError(null);
@@ -29,6 +38,10 @@ const SimulationWrapper = ({
             try {
                 const backendData = await apiService.getSimulationData(simulationType);
                 setData(backendData);
+
+                if (backendData?.hectares) {
+                    setHectares(backendData.hectares);
+                }
             } catch (err) {
                 setError('Erro ao carregar dados do servidor. Verifique se o backend está rodando.');
             } finally {
@@ -43,8 +56,8 @@ const SimulationWrapper = ({
     const changeViewMode = (mode) => setViewMode(mode);
 
     const handleHectaresChange = (value) => {
-        const intValue = parseInt(value) || 1;
-        setHectares(Math.max(1, intValue));
+        const floatValue = parseFloat(value) || 1;
+        setHectares(Math.max(1, floatValue));
     };
 
     const calculate = (items) => {
