@@ -128,7 +128,12 @@ npm install
 Na pasta backend, execute:
 ```bash
 npm start
-``` 
+```
+ou para Linux:
+
+```bash
+node server.js
+```
 
 O servidor será iniciado em:
 ```bash
