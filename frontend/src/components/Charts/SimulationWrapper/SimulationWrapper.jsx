@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DynamicChart from '../DynamicChart/DynamicChart';
 import ChartButton from '../../Charts/ChartButton/chartButton';
@@ -18,69 +18,95 @@ const SimulationWrapper = ({
     const [showChart, setShowChart] = useState(false);
     const [viewMode, setViewMode] = useState("summary");
     const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const saved = localStorage.getItem("hectares");
-        if (saved) setHectares(Number(saved));
+        console.log("%c[Render] SimulationWrapper montado", "color: cyan;");
+        return () => console.log("%c[Render] SimulationWrapper desmontado", "color: orange;");
     }, []);
 
-    useEffect(() => {
-        localStorage.setItem("hectares", hectares);
-    }, [hectares]);
+    console.log("%c[Render] Re-render do componente principal", "color: lime;");
 
     useEffect(() => {
+        let isMounted = true;
+        console.log("%c[Effect] Buscando dados do backend...", "color: yellow;");
+
         const fetchData = async () => {
-            setLoading(true);
-            setError(null);
-            
             try {
                 const backendData = await apiService.getSimulationData(simulationType);
-                setData(backendData);
+                if (!isMounted) return;
 
-                if (backendData?.hectares) {
-                    setHectares(backendData.hectares);
+                console.log("%c[API] Dados recebidos:", "color: lightgreen;", backendData);
+
+                setData(prev => {
+                    const same = JSON.stringify(prev) === JSON.stringify(backendData);
+                    if (same) {
+                        console.log("%c[State] Dados idênticos, não atualizar", "color: gray;");
+                        return prev;
+                    }
+                    console.log("%c[State] Atualizando dados...", "color: green;");
+                    return backendData;
+                });
+
+                if (
+                    backendData?.hectares &&
+                    Number(backendData.hectares) !== Number(hectares) &&
+                    !isNaN(backendData.hectares) &&
+                    backendData.hectares > 0
+                ) {
+                    console.log("%c[State] Atualizando hectares:", "color: pink;", backendData.hectares);
+                    setHectares(Number(backendData.hectares));
                 }
+
             } catch (err) {
-                setError('Erro ao carregar dados do servidor. Verifique se o backend está rodando.');
-            } finally {
-                setLoading(false);
+                console.error("%c[Erro] Falha ao buscar dados:", "color: red;", err);
             }
         };
 
         fetchData();
+
+        return () => {
+            isMounted = false;
+        };
     }, [simulationType]);
 
-    const toggleChart = () => setShowChart(!showChart);
-    const changeViewMode = (mode) => setViewMode(mode);
+    const toggleChart = useCallback(() => {
+        console.log("%c[Ação] Toggle chart", "color: violet;");
+        setShowChart(prev => !prev);
+    }, []);
 
-    const handleHectaresChange = (value) => {
+    const changeViewMode = useCallback((mode) => {
+        console.log("%c[Ação] Modo de visualização alterado:", "color: violet;", mode);
+        setViewMode(mode);
+    }, []);
+
+    const handleHectaresChange = useCallback((value) => {
         const floatValue = parseFloat(value) || 1;
+        console.log("%c[Ação] Hectares alterado:", "color: violet;", floatValue);
         setHectares(Math.max(1, floatValue));
-    };
+    }, []);
 
-    const calculate = (items) => {
+    const calculate = useCallback((items) => {
         if (!items) return 0;
         return items.reduce((sum, item) => {
             const quantidade = item.quantidade || item.qty || 0;
             const valorUnitario = item.valorUnitario || item.unitValue || 0;
             return sum + (quantidade * valorUnitario * hectares);
         }, 0);
-    };
+    }, [hectares]);
 
     const chartData = useMemo(() => {
+        console.log("%c[Memo] Recalculando chartData...", "color: lightblue;");
         if (!data) return { summaryValues: [], detailedLabels: [], detailedValues: [], total: 0 };
 
         const categories = {};
         const summaryValues = [];
         const detailedLabels = [];
         const detailedValues = [];
-        
+
         Object.keys(data).forEach(key => {
-            if (Array.isArray(data[key]) && key !== 'hectaresPlantas' && key !== 'titulo' && 
+            if (Array.isArray(data[key]) && key !== 'hectaresPlantas' && key !== 'titulo' &&
                 !key.includes('subtotal') && !key.includes('valorTotal')) {
-                
+
                 const items = data[key];
                 const total = calculate(items);
                 categories[key] = total;
@@ -90,7 +116,7 @@ const SimulationWrapper = ({
                     const descricao = item.descricao || item.item || '';
                     const quantidade = item.quantidade || item.qty || 0;
                     const valorUnitario = item.valorUnitario || item.unitValue || 0;
-                    
+
                     detailedLabels.push(descricao);
                     detailedValues.push(quantidade * valorUnitario * hectares);
                 });
@@ -100,22 +126,20 @@ const SimulationWrapper = ({
         const total = Object.values(categories).reduce((sum, val) => sum + val, 0);
         summaryValues.push(total);
 
-        return {
-            summaryValues,
-            detailedLabels,
-            detailedValues,
-            total
-        };
-    }, [data, hectares]);
+        return { summaryValues, detailedLabels, detailedValues, total };
+    }, [data, hectares, calculate]);
 
-    const handleEditStart = (tableType, index, field) => {
+    const handleEditStart = useCallback((tableType, index, field) => {
+        console.log("%c[Ação] Início de edição:", "color: violet;", tableType, index, field);
         setEditing({ type: tableType, index, field });
-    };
+    }, []);
 
-    const handleEditChange = (e, tableType, index, field) => {
-        const value = field === 'valorUnitario' || field === 'unitValue' ? 
-            parseFloat(e.target.value) || 0 : 
-            e.target.value;
+    const handleEditChange = useCallback((e, tableType, index, field) => {
+        const value = field === 'valorUnitario' || field === 'unitValue'
+            ? parseFloat(e.target.value) || 0
+            : e.target.value;
+
+        console.log("%c[Ação] Editando valor:", "color: violet;", { tableType, index, field, value });
 
         setData(prev => ({
             ...prev,
@@ -123,59 +147,29 @@ const SimulationWrapper = ({
                 idx === index ? { ...item, [field]: value } : item
             )
         }));
-    };
+    }, []);
 
-    const handleSaveToBackend = async () => {
+    const handleEditBlur = useCallback(() => {
+        console.log("%c[Ação] Edição finalizada", "color: violet;");
+        setEditing(null);
+    }, []);
+
+    const handleSaveToBackend = useCallback(async () => {
+        console.log("%c[Ação] Salvando no backend...", "color: yellow;");
         try {
-            setLoading(true);
             const result = await apiService.postRecalculation(simulationType, {
                 hectares,
                 data
             });
+            console.log("%c[API] Resultado do salvamento:", "color: lightgreen;", result);
             setData(result);
-            alert('✅ Dados salvos com sucesso no servidor!');
         } catch (err) {
-            console.error('Erro ao salvar:', err);
-            setError('❌ Erro ao salvar dados no servidor');
-        } finally {
-            setLoading(false);
+            console.error("%c[Erro] Falha ao salvar:", "color: red;", err);
         }
-    };
+    }, [simulationType, hectares, data]);
 
-    if (loading && !data) {
-        return (
-            <div className="loading-container">
-                <div className="loading-spinner"></div>
-                <p>Carregando dados do servidor...</p>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="error-container">
-                <h3>❌ Erro ao carregar dados</h3>
-                <p>{error}</p>
-                <p>Verifique se o backend está rodando na porta 3000.</p>
-                <button onClick={() => window.location.reload()}>
-                    Tentar Novamente
-                </button>
-            </div>
-        );
-    }
-
-    if (!data) {
-        return (
-            <div className="error-container">
-                <h3>❌ Nenhum dado disponível</h3>
-                <p>Não foi possível carregar os dados da simulação.</p>
-            </div>
-        );
-    }
-
-    const getTableData = (tableType) => {
+    const getTableData = useCallback((tableType) => {
         if (!data[tableType]) return [];
-        
         return data[tableType].map(item => ({
             item: item.descricao || '',
             unit: item.unidade || '',
@@ -183,15 +177,21 @@ const SimulationWrapper = ({
             unitValue: item.valorUnitario || 0,
             ...item
         }));
-    };
+    }, [data]);
 
-    const availableTables = Object.keys(data).filter(key => 
-        Array.isArray(data[key]) && 
-        key !== 'hectaresPlantas' && 
-        key !== 'titulo' &&
-        !key.includes('subtotal') &&
-        !key.includes('valorTotal')
-    );
+    const availableTables = useMemo(() => {
+        const tables = Object.keys(data || {}).filter(key =>
+            Array.isArray(data[key]) &&
+            key !== 'hectaresPlantas' &&
+            key !== 'titulo' &&
+            !key.includes('subtotal') &&
+            !key.includes('valorTotal')
+        );
+        console.log("%c[Memo] Tabelas disponíveis:", "color: lightblue;", tables);
+        return tables;
+    }, [data]);
+
+    if (!data) return null;
 
     return (
         <div className="dashboard-container">
@@ -203,12 +203,6 @@ const SimulationWrapper = ({
                     </h1>
                 </div>
             </header>
-
-            {error && (
-                <div className="alert-message error">
-                    {error}
-                </div>
-            )}
 
             <SummaryCards
                 hectares={hectares}
@@ -228,8 +222,10 @@ const SimulationWrapper = ({
                         columnsConfig={columnsConfig}
                         editing={editing}
                         handleEditStart={handleEditStart}
-                        handleEditChange={(e) => handleEditChange(e, tableType, editing?.index, editing?.field)}
-                        handleEditBlur={() => setEditing(null)}
+                        handleEditChange={(e) =>
+                            handleEditChange(e, tableType, editing?.index, editing?.field)
+                        }
+                        handleEditBlur={handleEditBlur}
                         hectares={hectares}
                     />
                 ))}

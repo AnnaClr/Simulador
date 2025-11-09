@@ -19,15 +19,20 @@ app.use(cors({
 }));
 
 app.use((req, res, next) => {
-    console.log(`📨 ${req.method} ${req.path} - Origin: ${req.headers.origin}`);
+    console.log(`📨 [${new Date().toLocaleTimeString()}] ${req.method} ${req.path}`);
+    if (req.headers.origin) {
+        console.log(`🌐 Origin: ${req.headers.origin}`);
+    }
     next();
 });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use('/api/simulador', simuladorRoutes);
 
 app.get('/health', (req, res) => {
+    console.log('/health endpoint acessado');
     res.json({ 
         status: 'OK', 
         message: 'Backend está funcionando!',
@@ -37,6 +42,7 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/', (req, res) => {
+    console.log('📡 Rota inicial acessada');
     res.json({ 
         message: 'API do Simulador Hub Caju Embrapa',
         version: '1.0.0',
@@ -55,6 +61,7 @@ app.get('/', (req, res) => {
 });
 
 app.use((error, req, res, next) => {
+    console.error(`Erro interno: ${error.message}`);
     res.status(500).json({ 
         error: 'Erro interno do servidor',
         message: error.message 
@@ -62,5 +69,10 @@ app.use((error, req, res, next) => {
 });
 
 app.options('*', cors());
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em: http://localhost:${PORT}`);
+});
 
 module.exports = app;
