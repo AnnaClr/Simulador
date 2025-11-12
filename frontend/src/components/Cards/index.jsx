@@ -14,25 +14,26 @@ export default function SummaryCards({
 
   return (
     <section className="summary-cards">
+      {/* 🔹 CARD 1 — Área Total */}
       <article className="summary-card">
         <div className="summary-icon">
           <FontAwesomeIcon icon="map-marked-alt" />
         </div>
         <div className="summary-content">
-          <span className="summary-label">Area Total</span>
+          <span className="summary-label">Área Total</span>
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "3px",
+              gap: "6px",
               fontSize: "17px",
               fontWeight: "600",
               borderRadius: "4px",
               padding: "4px",
               border:
-                  editing?.type === "hectares" && isMobile
-                    ? "2px solid #959595"
-                    : "none",
+                editing?.type === "hectares" && isMobile
+                  ? "2px solid #959595"
+                  : "none",
             }}
           >
             Hectares:
@@ -41,6 +42,7 @@ export default function SummaryCards({
               style={{
                 padding: "1px 12px",
                 cursor: "pointer",
+                borderRadius: "4px",
                 transition: "background-color 0.2s ease",
               }}
               onMouseEnter={(e) => {
@@ -66,8 +68,10 @@ export default function SummaryCards({
                   style={{
                     border: "none",
                     background: "transparent",
-                    width: "50px",
+                    width: "60px",
                     outline: "none",
+                    fontSize: "16px",
+                    fontWeight: "600",
                   }}
                   min="1"
                   step="1"
@@ -80,6 +84,7 @@ export default function SummaryCards({
         </div>
       </article>
 
+      {/* 🔹 CARD 2 — Quantidade de Plantas */}
       <article className="summary-card">
         <div className="summary-icon">
           <FontAwesomeIcon icon="seedling" />
@@ -92,6 +97,7 @@ export default function SummaryCards({
         </div>
       </article>
 
+      {/* 🔹 CARD 3 — Investimento Total */}
       <article className="summary-card highlight">
         <div className="summary-icon">
           <FontAwesomeIcon icon="calculator" />

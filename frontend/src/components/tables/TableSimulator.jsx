@@ -60,11 +60,13 @@ const TableSimulator = ({
                           type="number"
                           min="0"
                           value={row[col]}
-                          onChange={handleEditChange}
+                          onChange={(e) =>
+                            handleEditChange(e, tableType, rowIndex, col)
+                          }
                           onBlur={handleEditBlur}
                           autoFocus
                           style={{
-                            border: "1px solid #4a91e20",
+                            border: "1px solid #4a91e2",
                             borderRadius: "4px",
                             padding: "4px 8px",
                             width:
@@ -101,9 +103,6 @@ const TableSimulator = ({
                               editing?.index === rowIndex &&
                               editing?.field === col
                                 ? "#ebebeb"
-                                : window.innerWidth <= 768 &&
-                                  (col === "qty" || col === "unitValue")
-                                ? "#ebebeb"
                                 : "transparent",
                           }}
                           onMouseEnter={(e) => {
@@ -118,10 +117,7 @@ const TableSimulator = ({
                               editing?.field !== col
                             ) {
                               e.currentTarget.style.backgroundColor =
-                                window.innerWidth <= 768 &&
-                                (col === "qty" || col === "unitValue")
-                                  ? "#ebebeb"
-                                  : "transparent";
+                                "transparent";
                             }
                           }}
                         >
