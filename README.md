@@ -49,15 +49,17 @@ SIMULADOR
 │   │   ├── components/
 │   │   │   ├── Cards/
 │   │   │   ├── Charts/
-│   │   │   └── tables/
+│   │   │   └── Tables/
 │   │   ├── pages/
 │   │   │   ├── home/
-│   │   │   ├── first-simulation/
-│   │   │   └── second-simulation/
+│   │   │   ├── implatacao/
+│   │   │   └── substituicao/
 │   │   ├── services/
 │   │   │   └── util/
-│   │   │       ├── simulationData1.js
+│   │   │       ├── apiService.js
+│   │   │       └── simulationData1.js
 │   │   │       └── simulationData2.js
+│   │   │   └── formatCurrency.js
 │   │   ├── styles/
 │   │   │   ├── globals.css
 │   │   │   └── style.css
