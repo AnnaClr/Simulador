@@ -18,7 +18,7 @@ O sistema integra um **backend em Node.js** para leitura e tratamento de arquivo
 ### ⚙️ Backend
 - **Node.js + Express 5** — Servidor web e roteamento de APIs  
 - **XLSX** — Leitura e processamento de planilhas Excel  
-- **CORS e Dotenv** — Configuração de ambiente e segurança  
+- **CORS** — Configuração de ambiente
 
 ---
 
