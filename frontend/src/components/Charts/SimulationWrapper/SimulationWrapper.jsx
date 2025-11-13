@@ -13,7 +13,26 @@ const SimulationWrapper = ({
   columnsConfig,
   initialData,
 }) => {
-  const [data, setData] = useState(initialData || null);
+  const [data, setData] = useState(() => {
+    if (!initialData) return null;
+    
+    const processedData = { ...initialData };
+    
+    Object.keys(processedData).forEach(key => {
+      if (Array.isArray(processedData[key])) {
+        processedData[key] = processedData[key].map(item => ({
+          ...item,
+          qty: item.quantidade || item.qty || 0,
+          unitValue: item.valorUnitario || item.unitValue || 0,
+          quantidade: item.quantidade || item.qty || 0,
+          valorUnitario: item.valorUnitario || item.unitValue || 0
+        }));
+      }
+    });
+    
+    return processedData;
+  });
+  
   const [hectares, setHectares] = useState(1);
   const [editing, setEditing] = useState(null);
   const [showChart, setShowChart] = useState(false);
@@ -65,12 +84,13 @@ const SimulationWrapper = ({
     const categoryOrder = simulationType === 1 
       ? ["preparoSolo", "insumos"]
       : ["preparoArea", "insumos", "preparoSolo", "servicos"];
+
     categoryOrder.forEach((category) => {
       if (data[category] && Array.isArray(data[category])) {
         const items = data[category];
         const subtotal = items.reduce((sum, item) => {
-          const quantidade = item.quantidade || item.qty || 0;
-          const valorUnitario = item.valorUnitario || item.unitValue || 0;
+          const quantidade = item.qty || 0;
+          const valorUnitario = item.unitValue || 0;
           return sum + quantidade * valorUnitario * hectares;
         }, 0);
 
@@ -79,8 +99,8 @@ const SimulationWrapper = ({
 
         items.forEach((item) => {
           const descricao = item.descricao || item.item || "";
-          const quantidade = item.quantidade || item.qty || 0;
-          const valorUnitario = item.valorUnitario || item.unitValue || 0;
+          const quantidade = item.qty || 0;
+          const valorUnitario = item.unitValue || 0;
           detailedLabels.push(descricao);
           detailedValues.push(quantidade * valorUnitario * hectares);
         });
@@ -107,13 +127,16 @@ const SimulationWrapper = ({
   const getTableData = useCallback(
     (tableType) => {
       if (!data || !data[tableType]) return [];
-      return data[tableType].map((item) => ({
-        item: item.descricao || "",
-        unit: item.unidade || "",
-        qty: item.quantidade || item.qty || 0,
-        unitValue: item.valorUnitario || item.unitValue || 0,
-        ...item,
-      }));
+      
+      return data[tableType].map((item) => {
+        return {
+          item: item.descricao || item.item || "",
+          unit: item.unidade || item.unit || "",
+          qty: item.qty || 0,
+          unitValue: item.unitValue || 0,
+          ...item
+        };
+      });
     },
     [data]
   );
@@ -122,7 +145,7 @@ const SimulationWrapper = ({
     if (!data) return [];
     
     const tableOrder = simulationType === 1
-      ? ["preparoSolo", "insumos"] // Implantação
+      ? ["preparoSolo", "insumos"]
       : ["preparoArea", "insumos", "preparoSolo", "servicos"];
     
     return tableOrder.filter(table => 

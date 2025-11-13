@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { formatCurrency } from "../../services/util/simulationData2";
+import { formatCurrency } from "../../services/formatCurrency";
 import "./style.css";
 
 export default function SummaryCards({
@@ -14,7 +14,6 @@ export default function SummaryCards({
 
   return (
     <section className="summary-cards">
-      {/* 🔹 CARD 1 — Área Total */}
       <article className="summary-card">
         <div className="summary-icon">
           <FontAwesomeIcon icon="map-marked-alt" />
@@ -84,7 +83,6 @@ export default function SummaryCards({
         </div>
       </article>
 
-      {/* 🔹 CARD 2 — Quantidade de Plantas */}
       <article className="summary-card">
         <div className="summary-icon">
           <FontAwesomeIcon icon="seedling" />
@@ -97,7 +95,6 @@ export default function SummaryCards({
         </div>
       </article>
 
-      {/* 🔹 CARD 3 — Investimento Total */}
       <article className="summary-card highlight">
         <div className="summary-icon">
           <FontAwesomeIcon icon="calculator" />

@@ -42,18 +42,15 @@ class ApiService {
             const data = await response.json();
             return data;
         } catch (error) {
-            
             if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
                 throw new Error('Problema de conexão com o servidor. Verifique se o backend está rodando e configurado para CORS.');
             }
-            
             throw error;
         }
     }
 
     async post(endpoint, data) {
         try {
-            
             const response = await fetch(`${this.baseURL}${endpoint}`, {
                 method: 'POST',
                 headers: {
@@ -74,11 +71,13 @@ class ApiService {
     }
 
     async getImplantacaoBase() {
-        return await this.get('/simulador/implantacao');
+        const data = await this.get('/simulador/implantacao');
+        return this.formatDataForFrontend(data, 1);
     }
 
     async getSubstituicaoBase() {
-        return await this.get('/simulador/substituicao');
+        const data = await this.get('/simulador/substituicao');
+        return this.formatDataForFrontend(data, 2);
     }
 
     async postImplantacaoRecalculo(data) {
@@ -104,6 +103,87 @@ class ApiService {
         return simulationType === 1 ? 
             await this.postImplantacaoRecalculo(data) : 
             await this.postSubstituicaoRecalculo(data);
+    }
+
+    formatDataForFrontend(backendData, simulationType) {
+        if (!backendData) return null;
+
+        const formattedData = {
+            titulo: backendData.titulo || (simulationType === 1 
+                ? "Custo de Implantação de Pomar de Cajueiro-anão - 7m x 7m" 
+                : "Substituição de Copa de Cajueiro - 10m x 10m"),
+            hectaresPlantas: backendData.hectaresPlantas || { qtdPlantas: 204 }
+        };
+
+        if (simulationType === 1) {
+            if (backendData.preparoSolo) {
+                formattedData.preparoSolo = backendData.preparoSolo.map(item => ({
+                    descricao: item.descricao,
+                    unidade: item.unidade,
+                    quantidade: item.quantidade || 0,
+                    valorUnitario: item.valorUnitario || 0,
+                    qty: item.quantidade || 0,
+                    unitValue: item.valorUnitario || 0
+                }));
+            }
+
+            if (backendData.insumos) {
+                formattedData.insumos = backendData.insumos.map(item => ({
+                    descricao: item.descricao,
+                    unidade: item.unidade,
+                    quantidade: item.quantidade || 0,
+                    valorUnitario: item.valorUnitario || 0,
+                    qty: item.quantidade || 0,
+                    unitValue: item.valorUnitario || 0
+                }));
+            }
+        } else {
+            if (backendData.preparoArea) {
+                formattedData.preparoArea = backendData.preparoArea.map(item => ({
+                    descricao: item.descricao,
+                    unidade: item.unidade,
+                    quantidade: item.quantidade || 0,
+                    valorUnitario: item.valorUnitario || 0,
+                    qty: item.quantidade || 0,
+                    unitValue: item.valorUnitario || 0
+                }));
+            }
+
+            if (backendData.insumos) {
+                formattedData.insumos = backendData.insumos.map(item => ({
+                    descricao: item.descricao,
+                    unidade: item.unidade,
+                    quantidade: item.quantidade || 0,
+                    valorUnitario: item.valorUnitario || 0,
+                    qty: item.quantidade || 0,
+                    unitValue: item.valorUnitario || 0
+                }));
+            }
+
+            if (backendData.preparoSolo) {
+                formattedData.preparoSolo = backendData.preparoSolo.map(item => ({
+                    descricao: item.descricao,
+                    unidade: item.unidade,
+                    quantidade: item.quantidade || 0,
+                    valorUnitario: item.valorUnitario || 0,
+                    qty: item.quantidade || 0,
+                    unitValue: item.valorUnitario || 0
+                }));
+            }
+
+            if (backendData.servicos) {
+                formattedData.servicos = backendData.servicos.map(item => ({
+                    descricao: item.descricao,
+                    unidade: item.unidade,
+                    quantidade: item.quantidade || 0,
+                    valorUnitario: item.valorUnitario || 0,
+                    qty: item.quantidade || 0,
+                    unitValue: item.valorUnitario || 0
+                }));
+            }
+        }
+
+        return formattedData;
     }
 }
 
