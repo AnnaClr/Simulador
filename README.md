@@ -33,10 +33,18 @@ A aplicação é dividida em duas partes principais: **frontend** e **backend**,
 ```bash
 SIMULADOR
 ├── backend
-│   ├── data/
-│   │   ├── implantacaojeiroanoosimulacao.xlsx
-│   │   └── substituicaodecopasimulacao.xlsx
 │   ├── src/
+│   │   ├── controllers/
+│   │   │   ├── simuladorController.js
+│   │   ├── data/
+│   │   │   ├── implantacaojeiroanoosimulacao.xlsx
+│   │   │   └── substituicaodecopasimulacao.xlsx
+│   │   ├── routes/
+│   │   │   ├── routes.js
+│   │   ├── services/
+│   │   │   ├── implatacaoService.js
+│   │   │   └── substituicaoService.js
+│   │   ├── app.js
 │   ├── server.js
 │   ├── package.json
 │   └── .gitignore
