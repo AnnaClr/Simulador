@@ -4,19 +4,14 @@ const simuladorRoutes = require('./routes/routes');
 
 const app = express();
 
-app.use(cors({
-    origin: [
-        'http://localhost:5173',
-        'http://localhost:3000',
-        'http://127.0.0.1:5173',
-        'http://127.0.0.1:3000'
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-    credentials: true,
-    preflightContinue: false,
-    optionsSuccessStatus: 204
-}));
+app.use(
+    cors({
+        origin: (origin, callback) => callback(null, true),
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+    })
+);
 
 app.use((req, res, next) => {
     console.log(`📨 [${new Date().toLocaleTimeString()}] ${req.method} ${req.path}`);
@@ -66,13 +61,6 @@ app.use((error, req, res, next) => {
         error: 'Erro interno do servidor',
         message: error.message 
     });
-});
-
-app.options('*', cors());
-
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em: http://localhost:${PORT}`);
 });
 
 module.exports = app;
