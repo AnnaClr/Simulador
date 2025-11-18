@@ -18,7 +18,7 @@ O sistema integra um **backend em Node.js** para leitura e tratamento de arquivo
 ### ⚙️ Backend
 - **Node.js + Express 5** — Servidor web e roteamento de APIs  
 - **XLSX** — Leitura e processamento de planilhas Excel  
-- **CORS e Dotenv** — Configuração de ambiente e segurança  
+- **CORS** — Configuração de ambiente
 
 ---
 
@@ -33,10 +33,18 @@ A aplicação é dividida em duas partes principais: **frontend** e **backend**,
 ```bash
 SIMULADOR
 ├── backend
-│   ├── data/
-│   │   ├── implantacaojeiroanoosimulacao.xlsx
-│   │   └── substituicaodecopasimulacao.xlsx
 │   ├── src/
+│   │   ├── controllers/
+│   │   │   ├── simuladorController.js
+│   │   ├── data/
+│   │   │   ├── implantacaojeiroanoosimulacao.xlsx
+│   │   │   └── substituicaodecopasimulacao.xlsx
+│   │   ├── routes/
+│   │   │   ├── routes.js
+│   │   ├── services/
+│   │   │   ├── implatacaoService.js
+│   │   │   └── substituicaoService.js
+│   │   ├── app.js
 │   ├── server.js
 │   ├── package.json
 │   └── .gitignore
@@ -49,15 +57,17 @@ SIMULADOR
 │   │   ├── components/
 │   │   │   ├── Cards/
 │   │   │   ├── Charts/
-│   │   │   └── tables/
+│   │   │   └── Tables/
 │   │   ├── pages/
 │   │   │   ├── home/
-│   │   │   ├── first-simulation/
-│   │   │   └── second-simulation/
+│   │   │   ├── implatacao/
+│   │   │   └── substituicao/
 │   │   ├── services/
 │   │   │   └── util/
-│   │   │       ├── simulationData1.js
+│   │   │       ├── apiService.js
+│   │   │       └── simulationData1.js
 │   │   │       └── simulationData2.js
+│   │   │   └── formatCurrency.js
 │   │   ├── styles/
 │   │   │   ├── globals.css
 │   │   │   └── style.css
